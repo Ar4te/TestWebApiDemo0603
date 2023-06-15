@@ -15,8 +15,7 @@ public static class AutofacSetup
             .ConfigureContainer<ContainerBuilder>(builder =>
             {
                 builder.RegisterModule(new AutofacModuleRegister());
-            })
-            .UseSerilog();
+            });
         return host;
     }
 }

@@ -1,4 +1,5 @@
 ﻿using Extensions.ApiContext;
+using Extensions.Helper;
 using Extensions.Swagger;
 using IService;
 using Microsoft.AspNetCore.Mvc;
@@ -50,4 +51,21 @@ public class UserController : ControllerBase
             return MessageModel.Failed("密码不可为空");
         return await _user.GetToken(uName, uPassword);
     }
+    /// <summary>
+    /// 
+    /// </summary>
+    /// <param name="file"></param>
+    /// <returns></returns>
+    [HttpPost]
+    public async Task<MessageModel<string>> PostFile([FromForm] fileUploadReq fileReq)
+    {
+        string savePath = $"{DateTime.Now.Year}/{DateTime.Now.Month}/{DateTime.Now.Day}/{DateTime.Now.Hour}{DateTime.Now.Minute}{DateTime.Now.Millisecond}";
+        var res = FtpHelper.FtpUpload(fileReq.file, savePath);
+        return await Task.FromResult(res.Item3 ? MessageModel.Succeed("ok") : MessageModel.Failed(res.Item1));
+    }
+}
+
+public class fileUploadReq
+{
+    public IFormFile file { get; set; }
 }
