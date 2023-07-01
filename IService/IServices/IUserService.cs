@@ -1,8 +1,9 @@
 ﻿using Extensions.ApiContext;
 using IService.Base;
+using Microsoft.AspNetCore.Http;
 using Models.Models;
 
-namespace IService;
+namespace IService.IServices;
 
 public interface IUserService : IBaseService<User>
 {

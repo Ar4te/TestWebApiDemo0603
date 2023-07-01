@@ -22,6 +22,12 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
     {
         return await _db.Insertable(entity).ExecuteCommandAsync();
     }
+
+    public async Task<int> AddList(List<TEntity> entities)
+    {
+        return await _db.Insertable(entities).ExecuteCommandAsync();
+    }
+
     #endregion
 
 
@@ -45,6 +51,7 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
     {
         return await _db.Ado.SqlQueryAsync<TEntity>(sqlStr, sugarParams);
     }
+
 
 
 

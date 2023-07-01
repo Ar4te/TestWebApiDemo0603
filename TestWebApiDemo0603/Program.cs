@@ -8,6 +8,7 @@ using Extensions.Serilog;
 using Extensions.SnowFlake;
 using Extensions.Swagger;
 using Mapster;
+using Microsoft.AspNetCore.Mvc;
 using Models.MapsterConfig;
 using System.Reflection;
 
@@ -22,9 +23,11 @@ namespace TestWebApiDemo0603
             builder.Host.AddSerilogSetUp().AddAutofacSetup();
             // Add services to the container.
             builder.Services.AddMapsterSetup(MapsterConfig.SetMapsterConfig(new TypeAdapterConfig()));
+            builder.Services.Configure<ApiBehaviorOptions>(options => options.SuppressModelStateInvalidFilter = true);
             builder.Services.AddControllers(options =>
             {
                 options.Filters.Add<GlobalExceptionFilter>();
+                options.Filters.Add<ValidFilter>();
             });
             builder.Services.AddSingleton(new YittHelper());
             builder.Services.AddJwtSetup();
@@ -41,8 +44,8 @@ namespace TestWebApiDemo0603
             // Configure the HTTP request pipeline.
             //if (app.Environment.IsDevelopment())
             //{
-                app.UseSwagger();
-                app.UseSwaggerUISetup();
+            app.UseSwagger();
+            app.UseSwaggerUISetup();
             //}
 
             app.UseAuthorization();

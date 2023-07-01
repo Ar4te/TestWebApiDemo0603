@@ -1,4 +1,7 @@
-﻿using Mapster;
+﻿using Extensions.SnowFlake;
+using Mapster;
+using Models.Models;
+using Models.ViewModels;
 
 namespace Models.MapsterConfig;
 

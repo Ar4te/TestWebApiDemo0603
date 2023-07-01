@@ -1,22 +1,29 @@
 ﻿using Extensions.ApiContext;
 using Extensions.Helper;
 using Extensions.JWT;
-using IService;
+using IService.IServices;
+using MapsterMapper;
+using Microsoft.AspNetCore.Http;
 using Models.Models;
+using Models.ViewModels;
+using Newtonsoft.Json;
+using NPOI.XSSF.UserModel;
 using Repository.Base;
 using Service.Base;
 
-namespace Service;
+namespace Service.Services;
 
 public class UserService : BaseService<User>, IUserService
 {
     private readonly IBaseRepository<User> _dal;
     private readonly TokenHelper _tokenHelper;
-    public UserService(IBaseRepository<User> dal, TokenHelper tokenHelper) : base(dal)
+    private readonly IMapper _map;
+    public UserService(IBaseRepository<User> dal, TokenHelper tokenHelper, IMapper map)
     {
         _dal = dal;
         _baseDal = dal;
         _tokenHelper = tokenHelper;
+        _map = map;
     }
 
     public async Task<MessageModel<bool>> CreateAsync(User user)

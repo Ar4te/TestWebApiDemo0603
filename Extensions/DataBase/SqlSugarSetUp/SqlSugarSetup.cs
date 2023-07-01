@@ -70,7 +70,7 @@ public static class SqlSugarSetup
     {
         foreach (var param in pars)
         {
-            sql.Replace(param.ParameterName, param.Value.ToString());
+            sql.Replace(param.ParameterName, param.Value?.ToString());
         }
         return sql;
     }

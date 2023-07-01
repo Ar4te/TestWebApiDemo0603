@@ -2,7 +2,7 @@
 using Repository.Base;
 using Repository.UnitOfWork;
 
-namespace Repository;
+namespace Repository.Repositories;
 
 public class UserRepository : BaseRepository<User>
 {

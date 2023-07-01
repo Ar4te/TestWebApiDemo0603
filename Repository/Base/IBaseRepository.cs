@@ -9,6 +9,7 @@ public interface IBaseRepository<TEntity> where TEntity : class
 {
     #region Create
     Task<int> Add(TEntity entity);
+    Task<int> AddList(List<TEntity> entities);
     #endregion
     #region Query
     Task<List<TEntity>> GetAllDatas();

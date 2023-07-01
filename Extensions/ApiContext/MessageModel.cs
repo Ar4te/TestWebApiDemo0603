@@ -13,7 +13,7 @@ public class MessageModel<TEntity>
 
 public static class MessageModel
 {
-    public static MessageModel<T> Succeed<T>(T response, string msg = "成功", string msgDev = "")
+    public static MessageModel<T> Succeed<T>(T response = default, string msg = "成功", string msgDev = "")
     {
         return new MessageModel<T>
         {
