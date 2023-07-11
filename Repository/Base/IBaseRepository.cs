@@ -17,4 +17,8 @@ public interface IBaseRepository<TEntity> where TEntity : class
     Task<List<TEntity>> GetDatasBySql(string sqlStr, SugarParameter[] sugarParams = null);
     Task<TEntity> GetDataById(object Id);
     #endregion
+    #region Delete
+    Task<bool> DelData(Expression<Func<TEntity, bool>> whereExpression);
+    Task<bool> DelDatasByPKey(object[] pKeys);
+    #endregion
 }

@@ -57,4 +57,20 @@ public class BaseRepository<TEntity> : IBaseRepository<TEntity> where TEntity : 
 
     #endregion
 
+    #region Delete
+    public async Task<bool> DelData(Expression<Func<TEntity, bool>> whereExpression)
+    {
+        var res = await _db.Deleteable(whereExpression).ExecuteCommandAsync();
+        return res > 0;
+    }
+
+    public async Task<bool> DelDatasByPKey(object[] pKeys)
+    {
+        var res = await _db.Deleteable<TEntity>().In(pKeys).ExecuteCommandAsync();
+        return res > 0;
+    }
+
+
+
+    #endregion
 }
