@@ -3,6 +3,9 @@ using Extensions.Swagger;
 using IService.IServices;
 using Microsoft.AspNetCore.Mvc;
 using Models.ViewModels;
+using Newtonsoft.Json;
+using SQLitePCL;
+using System.Text;
 
 namespace TestWebApiDemo0603.Controllers;
 
@@ -12,9 +15,11 @@ namespace TestWebApiDemo0603.Controllers;
 public class WordListController : ControllerBase
 {
     private readonly IWL_WordListService _wl;
-    public WordListController(IWL_WordListService wl)
+    private readonly ILogger<WordListController> _log;
+    public WordListController(IWL_WordListService wl, ILogger<WordListController> logger)
     {
         _wl = wl;
+        _log = logger;
     }
 
     [HttpPost]
@@ -49,5 +54,26 @@ public class WordListController : ControllerBase
     public async Task<MessageModel<List<WordListVM>>> GetRandomWord(int count = 1)
     {
         return await _wl.GetRandomWord(count);
+    }
+
+    [HttpGet]
+    public IActionResult Test()
+    {
+        try
+        {
+            StringBuilder sb = new();
+            var str = sb.ToString();
+            _log.LogInformation("1");
+            _log.LogDebug("2");
+            _log.LogWarning("3");
+            _log.LogError("4");
+            _log.LogCritical("5");
+            return Ok(string.IsNullOrEmpty(str));
+
+        }
+        catch (Exception ex)
+        {
+            return Ok(ex.Message + "*****" + ex.StackTrace);
+        }
     }
 }

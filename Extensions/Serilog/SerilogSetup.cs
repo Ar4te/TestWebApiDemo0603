@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Hosting;
+﻿using Extensions.Helper;
+using Microsoft.Extensions.Hosting;
 using Serilog;
 using Serilog.Events;
 
@@ -10,8 +11,13 @@ public static class SerilogSetup
     {
         host.UseSerilog((ctx, log) =>
         {
+            #region newAdd
+            //log.MinimumLevel.Debug();
+            //log.MinimumLevel.Override("Microsoft", LogEventLevel.Information);
+            #endregion
             log.Enrich.FromLogContext();
             log.WriteTo.Console();
+            log.WriteTo.MySQL(AppSettings.app("DBS", "ConnectionString"));
             log.WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Debug).WriteTo.Async(a => a.File(SerilogConfig.debugPath(), rollingInterval: RollingInterval.Day, outputTemplate: SerilogConfig.serilogTemplate)))
             .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Information).WriteTo.Async(a => a.File(SerilogConfig.infoPath(), rollingInterval: RollingInterval.Day, outputTemplate: SerilogConfig.serilogTemplate)))
             .WriteTo.Logger(lg => lg.Filter.ByIncludingOnly(p => p.Level == LogEventLevel.Warning).WriteTo.Async(a => a.File(SerilogConfig.warnPath(), rollingInterval: RollingInterval.Day, outputTemplate: SerilogConfig.serilogTemplate)))

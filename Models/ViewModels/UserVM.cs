@@ -1,5 +1,4 @@
-﻿using Extensions.ValidateAttribute;
-using System.ComponentModel.DataAnnotations;
+﻿using System.ComponentModel.DataAnnotations;
 
 namespace Models.ViewModels;
 

@@ -1,5 +1,4 @@
 ﻿using Extensions.Helper;
-using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.DependencyInjection;
 using Serilog;
 using SqlSugar;
@@ -30,7 +29,7 @@ public static class SqlSugarSetup
                 {
                     OnLogExecuting = (sql, p) =>
                     {
-                        if (AppSettings.app("SqlAOP", "Enabled").ToUpper() == "TRUE")
+                        if (AppSettings.app("SqlAOP", "Enabled")?.ToUpper() == "TRUE")
                         {
                             Parallel.For(0, 1, e =>
                             {
@@ -38,7 +37,7 @@ public static class SqlSugarSetup
                             });
                         }
 
-                        if (AppSettings.app("SqlAOP", "LogToConsole").ToUpper() == "TRUE")
+                        if (AppSettings.app("SqlAOP", "LogToConsole")?.ToUpper() == "TRUE")
                         {
                             Console.WriteLine(string.Join("\r\n", new string[] { "--------", $"{DateTime.Now:yyyyMMdd:HHmmss} : " + GetWholeSql(p, sql) }), ConsoleColor.DarkCyan);
                         }
@@ -70,7 +69,7 @@ public static class SqlSugarSetup
     {
         foreach (var param in pars)
         {
-            sql.Replace(param.ParameterName, param.Value?.ToString());
+            sql?.Replace(param.ParameterName, param.Value?.ToString());
         }
         return sql;
     }
